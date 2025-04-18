@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cek Kode Berkah</title>
+</head>
+<body>
+  <h2>Masukkan Kode Berkah</h2>
+  <input type="text" id="inputCode" placeholder="Kode Berkah">
+  <button onclick="checkCode()">Cek</button>
+  <p id="result"></p>
+
+  <script>
+    function checkCode() {
+      const code = document.getElementById("inputCode").value.trim();
+      let codes = JSON.parse(localStorage.getItem("kodeBerkah")) || {};
+
+      if (codes.hasOwnProperty(code)) {
+        if (codes[code] < 3) {
+          codes[code]++;
+          localStorage.setItem("kodeBerkah", JSON.stringify(codes));
+          document.getElementById("result").innerText = `Kode valid! Telah digunakan ${codes[code]} dari 3 kali.`;
+        } else {
+          document.getElementById("result").innerText = "Kode sudah mencapai batas maksimum (3 kali).";
+        }
+      } else {
+        document.getElementById("result").innerText = "Kode tidak ditemukan.";
+      }
+
+      document.getElementById("inputCode").value = "";
+    }
+  </script>
+</body>
+</html>
